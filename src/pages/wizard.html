@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="/css/style.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Plex Manager</title>
+	</head>
+
+	<body>
+		<div class="container">
+			<h2>First Time Setup</h2>
+			<p>Settings will go here</p>
+			<button id="continue">Continue</button>
+		</div>
+	</body>
+
+	<script>
+		const { invoke } = window.__TAURI__.tauri;
+
+		document.getElementById("continue").addEventListener("click", () => {
+			invoke("write_config", {
+				config: {
+					initialised: true,
+					name: "Dan",
+					age: 25,
+				},
+			}).then(() => (window.location.href = "/"));
+		});
+	</script>
+</html>

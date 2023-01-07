@@ -13,11 +13,17 @@
   "tauri": {
     "allowlist": {
       "all": false,
+      "http": {
+        "all": true,
+        "scope": [
+          "tauri://localhost/*"
+        ]
+      },
       "fs": {
         "all": true,
         "scope": [
           "$RESOURCE/*",
-          "$RESOURCE/pages/*"
+          "$RESOURCE/frames/*"
         ]
       },
       "path": {
@@ -53,7 +59,7 @@
         "signingIdentity": null
       },
       "resources": [
-        "pages/*"
+        "frames/*"
       ],
       "shortDescription": "",
       "targets": "all",
@@ -74,7 +80,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "plexman",
+        "title": "Plex Manager",
         "width": 800
       }
     ]

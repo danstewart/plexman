@@ -4,29 +4,22 @@
 		<meta charset="UTF-8" />
 		<link rel="stylesheet" href="/css/style.css" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Tauri App</title>
+		<title>Plex Manager</title>
 		<script type="module" src="/js/main.js" defer></script>
-		<style>
-			.logo.vanilla:hover {
-				filter: drop-shadow(0 0 2em #ffe21c);
-			}
-		</style>
 	</head>
 
 	<body>
 		<div class="container">
-			<h1>Welcome to Tauri!</h1>
-
 			<div class="box">
-				<tauri-frame :url="./pages/main.html"> </tauri-frame>
+				<tauri-frame :url="./frames/main.html"> </tauri-frame>
 			</div>
 
 			<div class="box">
-				<tauri-frame :url="./pages/example.html"> </tauri-frame>
+				<tauri-frame :url="./frames/example.html"> </tauri-frame>
 			</div>
 
 			<div class="box">
-				<tauri-frame :url="./pages/settings.html" :execute-scripts> </tauri-frame>
+				<tauri-frame :url="./frames/settings.html" :execute-scripts> </tauri-frame>
 			</div>
 		</div>
 	</body>

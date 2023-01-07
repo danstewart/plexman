@@ -11,10 +11,9 @@
 	}
 
 	const config = getConfig().then(c => {
-		console.log(c);
-
 		for (let key in c) {
-			document.getElementById(key).value = c[key];
+			const el = document.getElementById(key);
+			if (el) el.value = c[key];
 		}
 	});
 </script>
