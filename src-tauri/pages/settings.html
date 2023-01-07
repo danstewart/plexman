@@ -1,0 +1,20 @@
+<p>Hello, this is the settings page</p>
+
+<input id="name" />
+<input id="age" />
+
+<script>
+	const { invoke } = window.__TAURI__.tauri;
+
+	async function getConfig() {
+		return await invoke("get_config", {});
+	}
+
+	const config = getConfig().then(c => {
+		console.log(c);
+
+		for (let key in c) {
+			document.getElementById(key).value = c[key];
+		}
+	});
+</script>
