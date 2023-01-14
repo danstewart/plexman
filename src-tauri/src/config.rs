@@ -69,3 +69,18 @@ pub fn write_config(config: AppConfig) -> Result<bool, String> {
     println!("{:?}", config);
     return config.to_disk();
 }
+
+#[tauri::command]
+pub fn delete_config() -> Result<bool, String> {
+    use std::fs;
+    use tauri::api::path::config_dir;
+
+    if let Some(mut config_file) = config_dir() {
+        config_file.push("plexman.json");
+        if let Ok(_) = fs::remove_file(config_file) {
+            return Ok(true);
+        };
+    }
+
+    Err("Unknown error while writing config file".to_string())
+}
