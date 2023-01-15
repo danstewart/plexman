@@ -1,5 +1,23 @@
+use crate::error::{to_err, ErrorInfo};
+use anyhow::{anyhow, Result};
+use std::path::PathBuf;
+
 use serde::{Deserialize, Serialize};
 use serde_json;
+
+fn get_config_file_path() -> Result<PathBuf> {
+    use tauri::api::path::config_dir;
+
+    if let Some(mut config_file) = config_dir() {
+        config_file.push("plexman");
+        std::fs::create_dir_all(&config_file)?;
+
+        config_file.push("plexman.json");
+        return Ok(config_file);
+    }
+
+    Err(anyhow!("Could not get path to config file"))
+}
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct AppConfig {
@@ -19,11 +37,8 @@ impl AppConfig {
 
     fn from_disk() -> Option<AppConfig> {
         use std::fs::read_to_string;
-        use tauri::api::path::config_dir;
 
-        if let Some(mut config_file) = config_dir() {
-            config_file.push("plexman.json");
-
+        if let Ok(config_file) = get_config_file_path() {
             if let Ok(contents) = read_to_string(config_file) {
                 let parsed: Result<AppConfig, _> = serde_json::from_str(&contents);
 
@@ -36,22 +51,16 @@ impl AppConfig {
         None
     }
 
-    fn to_disk(self) -> Result<bool, String> {
+    fn to_disk(self) -> Result<bool> {
         use std::fs;
-        use tauri::api::path::config_dir;
 
-        if let Some(mut config_file) = config_dir() {
-            config_file.push("plexman.json");
-            if let Ok(json_string) = serde_json::to_string(&self) {
-                if let Ok(_) = fs::File::create(&config_file) {
-                    if let Ok(_) = fs::write(&config_file, json_string) {
-                        return Ok(true);
-                    }
-                }
-            }
-        }
+        let config_file = get_config_file_path()?;
 
-        Err("Unknown error while writing config file".to_string())
+        let json_string = serde_json::to_string(&self)?;
+        fs::File::create(&config_file)?;
+        fs::write(&config_file, json_string)?;
+
+        Ok(true)
     }
 }
 
@@ -65,22 +74,25 @@ pub fn get_config() -> AppConfig {
 }
 
 #[tauri::command]
-pub fn write_config(config: AppConfig) -> Result<bool, String> {
-    println!("{:?}", config);
-    return config.to_disk();
+pub fn write_config(config: AppConfig) -> Result<bool, ErrorInfo> {
+    let res = config.to_disk();
+
+    if let Err(error) = res {
+        return Err(to_err(error));
+    }
+
+    Ok(true)
 }
 
 #[tauri::command]
-pub fn delete_config() -> Result<bool, String> {
+pub fn delete_config() -> Result<bool, ErrorInfo> {
     use std::fs;
-    use tauri::api::path::config_dir;
 
-    if let Some(mut config_file) = config_dir() {
-        config_file.push("plexman.json");
-        if let Ok(_) = fs::remove_file(config_file) {
-            return Ok(true);
-        };
+    match get_config_file_path() {
+        Ok(path) => match fs::remove_file(path) {
+            Ok(_) => return Ok(true),
+            Err(error) => return Err(to_err(anyhow!(error))),
+        },
+        Err(error) => return Err(to_err(error)),
     }
-
-    Err("Unknown error while writing config file".to_string())
 }

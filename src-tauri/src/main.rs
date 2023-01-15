@@ -4,6 +4,7 @@
 )]
 
 mod config;
+mod error;
 
 fn main() {
     tauri::Builder::default()

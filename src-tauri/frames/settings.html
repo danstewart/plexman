@@ -7,14 +7,10 @@
 
 <p id="msg"></p>
 
-<script>
-	const { invoke } = window.__TAURI__.tauri;
+<script type="module">
+	import { getConfig, writeConfig, deleteConfig } from "/js/fn.js";
 
 	const msg = document.getElementById("msg");
-
-	async function getConfig() {
-		return await invoke("get_config", {});
-	}
 
 	const config = getConfig().then(c => {
 		for (let key in c) {
@@ -28,12 +24,10 @@
 		const name = document.getElementById("name").value;
 		const age = document.getElementById("age").value;
 
-		invoke("write_config", {
-			config: {
-				initialised: true,
-				name: name,
-				age: Number(age),
-			},
+		writeConfig({
+			initialised: true,
+			name: name,
+			age: Number(age),
 		});
 
 		msg.innerText = "Saved!";
@@ -41,7 +35,7 @@
 
 	const resetBtn = document.getElementById("reset");
 	resetBtn.addEventListener("click", async () => {
-		await invoke("delete_config", {});
+		await deleteConfig();
 		window.location = "/pages/wizard.html";
 		msg.innerText = "Reset!";
 	});

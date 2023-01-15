@@ -15,17 +15,17 @@
 		</div>
 	</body>
 
-	<script>
-		const { invoke } = window.__TAURI__.tauri;
+	<script type="module">
+		import { writeConfig } from "/js/fn.js";
 
-		document.getElementById("continue").addEventListener("click", () => {
-			invoke("write_config", {
-				config: {
-					initialised: true,
-					name: "Dan",
-					age: 25,
-				},
-			}).then(() => (window.location.href = "/"));
+		document.getElementById("continue").addEventListener("click", async () => {
+			await writeConfig({
+				initialised: true,
+				name: "Dan",
+				age: 25,
+			});
+
+			window.location.href = "/";
 		});
 	</script>
 </html>
