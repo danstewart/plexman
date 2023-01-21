@@ -10,15 +10,16 @@
 
 	<body>
 		<div class="container">
-			<button id="addSource">Add Source</button>
-			<button id="addLibrary">Add Library</button>
+			<div id="control">
+				<button id="addSource">Add Source</button>
+				<button id="addLibrary">Add Library</button>
+			</div>
+
+			<!-- Main page content goes here -->
+			<main></main>
 
 			<div class="box">
 				<dynamic-frame :url="/frames/main.html"> </dynamic-frame>
-			</div>
-
-			<div class="box">
-				<dynamic-frame :url="/frames/settings.html" :execute-scripts> </dynamic-frame>
 			</div>
 		</div>
 	</body>
