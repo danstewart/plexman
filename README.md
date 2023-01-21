@@ -8,5 +8,5 @@ A desktop application for managing your plex library built with [Tauri](https://
 git clone git@github.com:danstewart/plexman.git
 cd plexman/
 cargo install create-tauri-app
-cargo tauri dev
+./tools/serve.sh
 ```

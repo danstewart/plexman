@@ -10,16 +10,15 @@
 
 	<body>
 		<div class="container">
+			<button id="addSource">Add Source</button>
+			<button id="addLibrary">Add Library</button>
+
 			<div class="box">
-				<tauri-frame :url="./frames/main.html"> </tauri-frame>
+				<dynamic-frame :url="/frames/main.html"> </dynamic-frame>
 			</div>
 
 			<div class="box">
-				<tauri-frame :url="./frames/example.html"> </tauri-frame>
-			</div>
-
-			<div class="box">
-				<tauri-frame :url="./frames/settings.html" :execute-scripts> </tauri-frame>
+				<dynamic-frame :url="/frames/settings.html" :execute-scripts> </dynamic-frame>
 			</div>
 		</div>
 	</body>

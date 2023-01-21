@@ -5,6 +5,7 @@ use std::path::PathBuf;
 use serde::{Deserialize, Serialize};
 use serde_json;
 
+/// Return the path to the application configuration file
 fn get_config_file_path() -> Result<PathBuf> {
     use tauri::api::path::config_dir;
 
@@ -19,19 +20,30 @@ fn get_config_file_path() -> Result<PathBuf> {
     Err(anyhow!("Could not get path to config file"))
 }
 
+/// An object detailing where media files can be found
+#[derive(Serialize, Deserialize, Debug)]
+pub struct MediaSource {
+    path: String,
+}
+
+/// An object detailing where a plex library is
+#[derive(Serialize, Deserialize, Debug)]
+pub struct LibraryTarget {
+    path: String,
+    is_local: bool,
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct AppConfig {
-    name: String,
-    age: i32,
-    initialised: bool,
+    source: Option<MediaSource>,
+    targets: Vec<LibraryTarget>,
 }
 
 impl AppConfig {
     fn default() -> AppConfig {
         AppConfig {
-            name: "".to_string(),
-            age: 0,
-            initialised: false,
+            source: None,
+            targets: vec![],
         }
     }
 
