@@ -11,12 +11,16 @@ if ! command -v live-server >/dev/null 2>&1; then
 fi
 
 echo "Starting live-server..."
-live-server src --port=5555 --no-browser &
+live-server src --port=5555 --no-browser >/dev/null &
 live_server_pid=$!
 
+# Kill the live-server process on Ctrl-C
+trap "kill $live_server_pid" INT
+
 echo "Starting tauri dev..."
-cargo tauri dev
+cargo tauri dev >/dev/null
 
 # Kill the live-server process when the script exits
-trap "kill $live_server_pid" INT
-wait
+echo "Exiting..."
+kill $live_server_pid
+wait $live_server_pid
