@@ -1,0 +1,38 @@
+<div>
+	<p>Welcome to PlexMan!</p>
+	<p>To get started add a new source using the button above.</p>
+
+	<button id="setup">Click me to configure the app</button>
+</div>
+
+<script type="module">
+	import { Config } from "/js/fn.js";
+
+	console.log("OK");
+
+	// Dummy add config
+	const setup = document.querySelector("#setup");
+	setup.addEventListener("click", async () => {
+		console.log("C");
+		await Config.write({
+			source: {
+				name: "Downloads",
+				path: "/mnt/passport/Plex/Torrents/Downloads/",
+			},
+			targets: [
+				{
+					name: "Movies",
+					path: "/mnt/passport/Plex/Torrents/Movies/",
+					is_local: true,
+				},
+				{
+					name: "TV",
+					path: "/mnt/passport/Plex/Torrents/TV/",
+					is_local: true,
+				},
+			],
+		});
+
+		window.location.reload();
+	});
+</script>

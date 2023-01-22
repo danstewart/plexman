@@ -1,31 +1,24 @@
 import { registerControllers, html } from "/js/vendor/binder/binder.js";
 import { DynamicFrame } from "/js/vendor/binder/core/dynamic_frame.js";
-import { getConfig, writeConfig } from "./fn.js";
+import { Config } from "/js/fn.js";
+import { MediaList } from "./controllers/media_list.js";
 
-registerControllers(DynamicFrame);
+registerControllers(DynamicFrame, MediaList);
 
 window.addEventListener("DOMContentLoaded", async () => {
-	const config = await getConfig();
+	const config = await Config.get();
 	const main = document.querySelector("main");
 
 	if (!config.source) {
-		const welcome = document.createElement("div");
-		welcome.innerHTML = html`
-			<p>Welcome to PlexMan!</p>
-			<p>To get started add a new source using the button above.</p>
-		`;
-
-		main.appendChild(welcome);
+		main.innerHTML = html`<dynamic-frame :url="/frames/setup.html" :execute-scripts></dynamic-frame>`;
+	} else {
+		main.innerHTML = html`<dynamic-frame :url="/frames/media.html" :execute-scripts></dynamic-frame>`;
 	}
 
-	const addSource = document.querySelector("#addSource");
-	addSource.addEventListener("click", async () => {
-		await writeConfig({
-			source: {
-				path: "/xyz",
-			},
-			targets: [],
-		});
+	// Reset application (for debugging)
+	const reset = document.querySelector("#reset");
+	reset.addEventListener("click", async () => {
+		await Config.delete();
 
 		window.location.reload();
 	});

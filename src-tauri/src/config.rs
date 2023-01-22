@@ -23,12 +23,14 @@ fn get_config_file_path() -> Result<PathBuf> {
 /// An object detailing where media files can be found
 #[derive(Serialize, Deserialize, Debug)]
 pub struct MediaSource {
+    name: String,
     path: String,
 }
 
 /// An object detailing where a plex library is
 #[derive(Serialize, Deserialize, Debug)]
 pub struct LibraryTarget {
+    name: String,
     path: String,
     is_local: bool,
 }

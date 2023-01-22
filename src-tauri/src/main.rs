@@ -5,6 +5,7 @@
 
 mod config;
 mod error;
+mod io;
 
 fn main() {
     tauri::Builder::default()
@@ -12,6 +13,7 @@ fn main() {
             config::get_config,
             config::write_config,
             config::delete_config,
+            io::list_files,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

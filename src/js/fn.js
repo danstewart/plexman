@@ -10,8 +10,15 @@ const invoke = async (method, args) => {
 };
 
 // Config
-const getConfig = async () => invoke("get_config", {});
-const writeConfig = async config => invoke("write_config", { config });
-const deleteConfig = async () => invoke("delete_config", {});
+const Config = {
+	get: async () => invoke("get_config", {}),
+	write: async config => invoke("write_config", { config }),
+	delete: async () => invoke("delete_config", {}),
+};
 
-export { getConfig, writeConfig, deleteConfig };
+// IO
+const IO = {
+	listFiles: async path => invoke("list_files", { path }),
+};
+
+export { Config, IO };
