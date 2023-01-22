@@ -1,7 +1,7 @@
 import { registerControllers, html } from "/js/vendor/binder/binder.js";
 import { DynamicFrame } from "/js/vendor/binder/core/dynamic_frame.js";
 import { Config } from "/js/fn.js";
-import { MediaList } from "./controllers/media_list.js";
+import { MediaList } from "/js/controllers/media_list.js";
 
 registerControllers(DynamicFrame, MediaList);
 

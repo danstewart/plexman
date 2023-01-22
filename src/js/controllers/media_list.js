@@ -1,4 +1,4 @@
-import { html, Controller } from "/js/vendor/binder/binder.js";
+import { css, html, Controller } from "/js/vendor/binder/binder.js";
 import { Config, IO } from "/js/fn.js";
 
 /**
@@ -9,8 +9,8 @@ class MediaList extends Controller {
 		this.config = await Config.get();
 		this.files = await this.getFiles();
 
-		const files = this.files.map(file => html`<p>${file.name}</p>`);
-		this.innerHTML = html`<div>${files.join("")}</div>`;
+		const files = this.files.map(file => html`<div class="row"><span>${file.name}</span></div>`);
+		this.innerHTML = html` <div id="main">${files.join("")}</div>`;
 	}
 
 	async getFiles() {
