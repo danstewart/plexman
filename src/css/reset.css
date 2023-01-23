@@ -1,0 +1,5 @@
+/* RESET */
+/* Resets some base styles that annoy me */
+p {
+	margin: 0;
+}

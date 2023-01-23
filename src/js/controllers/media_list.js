@@ -9,7 +9,14 @@ class MediaList extends Controller {
 		this.config = await Config.get();
 		this.files = await this.getFiles();
 
-		const files = this.files.map(file => html`<div class="row"><span>${file.name}</span></div>`);
+		const files = this.files.map(
+			file => html`<div class="row">
+				<div class="col mb-md">
+					<span class="no-break">${file.name}</span>
+					<span class="fs-sm font-mono no-break">${file.path}</span>
+				</div>
+			</div>`
+		);
 		this.innerHTML = html` <div id="main">${files.join("")}</div>`;
 	}
 

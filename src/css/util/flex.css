@@ -1,0 +1,16 @@
+/* FLEX */
+.row {
+	display: flex;
+	text-align: start;
+}
+
+.col {
+	display: flex;
+	flex-direction: column;
+}
+
+.center {
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
