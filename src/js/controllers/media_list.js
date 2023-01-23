@@ -10,8 +10,8 @@ class MediaList extends Controller {
 		this.files = await this.getFiles();
 
 		const files = this.files.map(
-			file => html`<div class="row">
-				<div class="col mb-md">
+			file => html`<div class="row mb-md grow p-md" style="border-bottom: 1px solid cyan; width: 100%;">
+				<div class="col">
 					<span class="no-break">${file.name}</span>
 					<span class="fs-sm font-mono no-break">${file.path}</span>
 				</div>

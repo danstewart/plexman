@@ -1,4 +1,4 @@
-/* SPACING */
+/* MARGIN */
 .mb-none {
 	margin-bottom: 0;
 }
@@ -17,4 +17,9 @@
 
 .mb-xl {
 	margin-bottom: 2rem;
+}
+
+/* PADDING */
+.p-md {
+	padding: 1rem;
 }
